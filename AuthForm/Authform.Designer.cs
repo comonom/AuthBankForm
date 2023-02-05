@@ -60,7 +60,7 @@ namespace AuthForm
             this.llbNewAkk.Location = new System.Drawing.Point(103, 230);
             this.llbNewAkk.Name = "llbNewAkk";
             this.llbNewAkk.Size = new System.Drawing.Size(92, 13);
-            this.llbNewAkk.TabIndex = 5;
+            this.llbNewAkk.TabIndex = 4;
             this.llbNewAkk.TabStop = true;
             this.llbNewAkk.Text = "Создать аккаунт";
             this.llbNewAkk.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.llbNewAkk_LinkClicked);
@@ -71,14 +71,14 @@ namespace AuthForm
             this.tbPassword.Name = "tbPassword";
             this.tbPassword.PasswordChar = '*';
             this.tbPassword.Size = new System.Drawing.Size(142, 20);
-            this.tbPassword.TabIndex = 4;
+            this.tbPassword.TabIndex = 2;
             // 
             // tbLogin
             // 
             this.tbLogin.Location = new System.Drawing.Point(121, 67);
             this.tbLogin.Name = "tbLogin";
             this.tbLogin.Size = new System.Drawing.Size(142, 20);
-            this.tbLogin.TabIndex = 3;
+            this.tbLogin.TabIndex = 1;
             // 
             // lbPassword
             // 
@@ -103,7 +103,7 @@ namespace AuthForm
             this.btnAuth.Location = new System.Drawing.Point(106, 188);
             this.btnAuth.Name = "btnAuth";
             this.btnAuth.Size = new System.Drawing.Size(89, 23);
-            this.btnAuth.TabIndex = 0;
+            this.btnAuth.TabIndex = 3;
             this.btnAuth.Text = "Войти";
             this.btnAuth.UseVisualStyleBackColor = true;
             this.btnAuth.Click += new System.EventHandler(this.btnAuth_Click);

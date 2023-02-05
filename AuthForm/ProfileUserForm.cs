@@ -24,6 +24,7 @@ namespace AuthForm
 
         private void btnOut_Click(object sender, EventArgs e)
         {
+            User.localuser = null;
             Authform authForm = new Authform();
             authForm.Show();
             Hide();

@@ -22,5 +22,17 @@ namespace AuthForm.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("2010-02-11")]
+        public global::System.DateTime BlockedToDate {
+            get {
+                return ((global::System.DateTime)(this["BlockedToDate"]));
+            }
+            set {
+                this["BlockedToDate"] = value;
+            }
+        }
     }
 }

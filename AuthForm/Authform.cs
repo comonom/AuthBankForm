@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AuthForm.Properties;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -11,16 +12,20 @@ using System.Windows.Forms;
 namespace AuthForm
 {
     public partial class Authform : Form
-    {       
+    {
+        private int CountBadTries = 0;
         public Authform()
         {
             InitializeComponent();
         }
-
-        /*if(lbLogin=tbLogin.Text && lbPassword=tbPassword.Text)*/
           
         private void btnAuth_Click(object sender, EventArgs e)
         {
+            if (Properties.Settings.Default.BlockedToDate > DateTime.Now)
+            {
+                MessageBox.Show("Количество неудачных попыток превышено, вы заблокированы до:" + Properties.Settings.Default.BlockedToDate);
+                return;
+            }
             if(!string.IsNullOrEmpty(tbLogin.Text) && !string.IsNullOrEmpty(tbPassword.Text))
             {
                 DataTable table = Database.Instance.SqlZapros($"SELECT * FROM `Users` WHERE `Login`='{tbLogin.Text}' AND `Password`='{tbPassword.Text}'");
@@ -33,7 +38,18 @@ namespace AuthForm
                 }
                 else
                 {
+                    CountBadTries++;
+                    if (CountBadTries >= 3)
+                    {
+                        DateTime blockTime = DateTime.Now.AddMinutes(1);
+                        Properties.Settings.Default.BlockedToDate = blockTime;
+                        Properties.Settings.Default.Save();
+                        CountBadTries = 0;
+                        MessageBox.Show("Количество неудачных попыток превышено, вы заблокированы до:" + blockTime);
+                        return;
+                    }
                     MessageBox.Show("Пользователя не существует!");
+
                 }
             }
             else
