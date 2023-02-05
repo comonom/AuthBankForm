@@ -23,7 +23,7 @@ namespace AuthForm
         {
             if (Properties.Settings.Default.BlockedToDate > DateTime.Now)
             {
-                MessageBox.Show("Количество неудачных попыток превышено, вы заблокированы до:" + Properties.Settings.Default.BlockedToDate);
+                MessageBox.Show($"Количество неудачных попыток превышено, вы заблокированы ещё {(Properties.Settings.Default.BlockedToDate - DateTime.Now).TotalSeconds} сек.");
                 return;
             }
             if(!string.IsNullOrEmpty(tbLogin.Text) && !string.IsNullOrEmpty(tbPassword.Text))
