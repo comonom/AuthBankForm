@@ -83,7 +83,7 @@
     <Compile Include="RegForm.Designer.cs">
       <DependentUpon>RegForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Users.cs" />
+    <Compile Include="User.cs" />
     <EmbeddedResource Include="Authform.resx">
       <DependentUpon>Authform.cs</DependentUpon>
     </EmbeddedResource>

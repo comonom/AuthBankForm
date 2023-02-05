@@ -17,55 +17,74 @@ namespace AuthForm
         {
             InitializeComponent();
         }
+
         public bool ValidatePassword(string password)
         {
-            char[] spec= { '.', ',', '!', '@', '#', '$', '%', '*' };
-            if(password.Length <7 && password.Length >22)
+            char[] spec = { '.', ',', '!', '@', '#', '$', '%', '*' };
+            if (password.Length < 7 && password.Length > 22)
             {
                 return false;
             }
-            bool haveNum=false,
-                haveUpLetter=false,
-                haveDownLetter=false,
-                haveSpec=false;
-            char c;
-            if(char.IsDigit(c))
-                haveNum true;
-            else if(char.IsLower(c))
-                haveDownLetter true;
-            else if(char.IsUpper(c))
-                haveUpLetter true;
-            else if(char.IsSymbol(c))
-                haveSpec true;
 
+            bool haveNum = false,
+                haveUpper = false,
+                haveLower = false,
+                haveSpec = false;
 
-        }
-        private void llbNewAkk_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            Authform authform = new Authform();
-            authform.Show();
-            Hide();
-            return;
-        }
-
-        private void btnAuth_Click(object sender, EventArgs e)
-        {
-            if (!string.IsNullOrEmpty(tbLoginReg.Text) && !string.IsNullOrEmpty(tbPasswordReg.Text) && !string.IsNullOrEmpty(tbBirth.Text))
+            foreach (char c in password)
             {
-                DataTable dataTable = Database.Instance.SqlZapros($"INSERT INTO `Users` (`Login`, `Password`, `Birth`) VALUES ({tbLoginReg.Text}, {tbPasswordReg.Text}, {tbBirth.Text})");
-                if (dataTable.Rows.Count > 0)
+                if (char.IsDigit(c))
+                    haveNum = true;
+                else if (char.IsLower(c))
+                    haveLower = true;
+                else if (char.IsUpper(c))
+                    haveUpper = true;
+                else if (spec.Any(s => s == c))
+                    haveSpec = true;
+            }
+
+            return haveNum && haveUpper && haveLower && haveSpec;
+        }
+
+        private void btnCreate_Click(object sender, EventArgs e)
+        {
+            int passSeria, passNum;
+            if (!string.IsNullOrEmpty(tbLoginReg.Text) && !string.IsNullOrEmpty(tbPasswordReg.Text) && int.TryParse(tbPassportNum.Text, out passNum) && int.TryParse(tbPassportSeria.Text,  out passSeria))
+            {
+                if(!ValidatePassword(tbPasswordReg.Text))
                 {
-                    MessageBox.Show("Welcome!");
-                    ProfileUserForm profileUserf = new ProfileUserForm();
-                    profileUserf.Show();
-                    Hide();
+                    MessageBox.Show("Пароль не валидный!");
+                    return;
                 }
+                if (Database.Instance.SqlZapros($"SELECT * FROM `Users` WHERE `Login`='{tbLoginReg.Text}'").Rows.Count > 0)
+                {
+                    MessageBox.Show("Этот пользователь уже существует!");
+                    return;
+                } 
+
+                Database.Instance.NonQuerryZapros($"INSERT INTO `Users` (`Login`, `Password`, `Birth`,`Passport_seria`,`Passport_num`,`Role`) VALUES ('{tbLoginReg.Text}', '{tbPasswordReg.Text}', '{dateTimeBirth.Value.ToString("yyyy-MM-dd")}','{tbPassportSeria.Text}','{tbPassportNum.Text}','2')");
+               
+                MessageBox.Show("Вы зарегестрированы,войдите в аккаунт!");
+
+                Close();
             }
             else
             {
                 MessageBox.Show("Заполните все поля!");
             }
 
+        }
+
+        private void dateTimeBirth_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void llbAuth_Clicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Authform au = new Authform();
+            au.Show();
+            Hide();
         }
     }
 }

@@ -26,6 +26,7 @@ namespace AuthForm
                 DataTable table = Database.Instance.SqlZapros($"SELECT * FROM `Users` WHERE `Login`='{tbLogin.Text}' AND `Password`='{tbPassword.Text}'");
                 if (table.Rows.Count > 0)
                 {
+                    User.localuser = new User(table.Rows[0]);
                     ProfileUserForm profileUserf = new ProfileUserForm();
                     profileUserf.Show();
                     Hide();
@@ -46,9 +47,9 @@ namespace AuthForm
         {
 
             RegForm regForm = new RegForm();
-            regForm.Show();
             Hide();
-            return;
+            regForm.ShowDialog();
+            Show();
         }
 
     }

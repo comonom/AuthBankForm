@@ -15,6 +15,11 @@ namespace AuthForm
         public ProfileUserForm()
         {
             InitializeComponent();
+            lbLogUser.Text = $"Логин: {User.localuser.Login}";
+            lbNumUser.Text = $"Номер паспорта: {User.localuser.Passport_num}";
+            lbSeriaUser.Text = $"Серия паспорта: {User.localuser.Passport_seria}";
+            lbBirthUser.Text = $"Дата рождения: {User.localuser.Birth}";
+            lbRoleUser.Text = $"Роль: {User.GetRoleName(User.localuser.Role)}";
         }
 
         private void btnOut_Click(object sender, EventArgs e)
@@ -25,9 +30,6 @@ namespace AuthForm
             return;
         }
 
-        private void ProfileUser_Load(object sender, EventArgs e)
-        {
 
-        }
     }
 }
